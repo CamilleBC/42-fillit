@@ -70,17 +70,30 @@ _OBJECTS = main.o
 OBJECTS = $(patsubst %,$(BUILD_DIR)/%,$(_OBJECTS))
 
 
+all: $(TARGET_EXEC)
+
 $(TARGET_EXEC): $(OBJECTS)
-		gcc -o $@ $^ $(CFLAGS) $(LIB_FLAGS)
+	@echo "[exec] ..."
+	@gcc -o $@ $^ $(CFLAGS) $(LIB_FLAGS)
+	@echo "[exec] BUILT"
 
 $(BUILD_DIR)/%.o: %.c $(DEPS)
-		$(MKDIR_P) $(BUILD_DIR)
-		$(CC) -c -o $@ $< $(CFLAGS)
+	@echo "[objects] ..."
+	@$(MKDIR_P) $(BUILD_DIR)
+	@$(CC) -c -o $@ $< $(CFLAGS)
+	@echo "[objects] BUILT"
 
-.PHONY: clean
+.PHONY: clean fclean
 
 clean:
-	$(RM) -f $(BUILD_DIR)/*.o *~ core $(INCDIR)/*~ 
+	@echo "[clean] ..."
+	@$(RM) -rf $(BUILD_DIR)
+	@echo "[clean] DONE"
 
 fclean: clean
-	$(RM) $(TARGET_EXEC)
+	@echo "[fclean] ..."
+	@$(RM) -f $(TARGET_EXEC)
+	@echo "[fclean] DONE"
+
+re: fclean $(TARGET_EXEC)
+	@echo "[re] DONE"

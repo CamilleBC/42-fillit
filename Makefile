@@ -50,6 +50,7 @@ $(TARGET_EXEC): $(OBJECTS)
 	@$(CC) $(CFLAGS) $(OBJECTS) $(LIB_FLAGS) -o $(TARGET_EXEC)
 
 $(BUILD_DIR)/%.o:$(SRCS_DIR)/%.c
+	@echo "[Building $@...]"
 	@$(CC) $(CFLAGS) $(DEPS_FLAGS) -I $(INC_DIR) -o $@ -c $<
 
 clean:

@@ -89,7 +89,6 @@ PURPLE = \033[1;35m
 NC     = \033[0m
 
 all: 
-	$(info LIB_OBJECTS is $(LIB_OBJECTS))
 	@mkdir -p $(LIB_BUILD_DIR)
 	@make $(TARGET_LIB)
 

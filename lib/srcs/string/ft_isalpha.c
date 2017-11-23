@@ -1,30 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   algorithm.c                                        :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbaillat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/23 14:39:35 by cbaillat          #+#    #+#             */
-<<<<<<< Updated upstream
-/*   Updated: 2017/11/23 14:44:38 by cbaillat         ###   ########.fr       */
-=======
-/*   Updated: 2017/11/23 16:04:04 by cbaillat         ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Created: 2017/11/16 18:02:39 by cbaillat          #+#    #+#             */
+/*   Updated: 2017/11/23 19:05:13 by cbaillat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 
-<<<<<<< Updated upstream
-=======
-static uint32_t	ft_get_min_size(t_tetri *tetriminos)
+int		ft_isalpha(int c)
 {
-	uint32_t	size;
-
-	if (tetriminos == NULL)
-		return (FAILURE);
-	while (tetriminos->next != NULL)
-		++size;
-
+	if ((c >= 'A' && c <= 'Z')
+		|| (c >= 'a' && c <= 'z'))
+		return (1);
+	return (0);
 }
->>>>>>> Stashed changes

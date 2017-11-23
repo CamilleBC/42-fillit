@@ -1,0 +1,70 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cbaillat <cbaillat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/11/14 14:02:52 by cbaillat          #+#    #+#             */
+/*   Updated: 2017/11/20 15:46:47 by cbaillat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+/*
+** 1- We create two types of values, one in 8 bytes, the other one in one.
+** 2- We use and logic AND to check if the memory is aligned.
+** 3- While it is not aligned, we set byte per byte.
+** 4- We cast the smaller pointer to a bigger one, so we need to cast to void
+** before to avoid compilation problems.
+** 5- Once we are aligned, as long as we have at least 8 bytes, we copy using
+** the entire register to be faster on big value.
+** 6- If we have less than 8 byt to copy, we copy byte per byte.
+*/
+
+void	*ft_memset( void *b, int c, size_t len )
+{
+	uint8_t	*byte_ptr;
+		
+	byte_ptr = (uint8_t *)b;
+	while (len > 0)
+	{
+		*byte_ptr = (uint8_t)c;
+		byte_ptr++;
+		--len;
+	}
+	return (b);
+}
+
+/*void	*ft_memset(void * b, int c, size_t len)
+{
+	uint8_t		u8 = (uint8_t)c;
+	uint64_t	u64 = (uint64_t)c;
+	uint8_t		*byte_ptr;
+	uint64_t	*x64_ptr;
+
+	byte_ptr = (uint8_t *)b;
+	while (len && ((uintptr_t)byte_ptr & 7))
+	{
+		--len;
+		*byte_ptr = u8;
+		++byte_ptr;
+	}
+	x64_ptr = (uint64_t *)(void *)byte_ptr;
+	u64 = (u64 << 56) | (u64 << 48) | (u64 << 40) | (u64 << 32) | (u64 << 24)
+		| (u64 << 16) | (u64 << 8) | u64;
+	while (len >= 8)
+	{
+		*x64_ptr = u64;
+		x64_ptr++;
+		len -= 8;
+	}
+	byte_ptr = (uint8_t *)(void *)x64_ptr;
+	while (--len)
+	{
+		*byte_ptr = u8;
+		++byte_ptr;
+	}
+	return (b);
+}*/

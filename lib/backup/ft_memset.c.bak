@@ -1,0 +1,73 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cbaillat <cbaillat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/11/14 14:02:52 by cbaillat          #+#    #+#             */
+/*   Updated: 2017/11/20 15:30:26 by cbaillat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+static t_byte			*ft_cpy_first_bytes(t_byte *ptr, t_byte value,
+		size_t *len)
+{
+	while ((((unsigned long)ptr & 7) != 0) && len > 0)
+	{
+		*ptr = value;
+		++ptr;
+		*len = *len - 1;
+	}
+	return (ptr);
+}
+
+static t_x64register	*ft_cpyx64(t_x64register *ptr, t_x64register value,
+		size_t *len)
+{
+	while (((*len / 8) > 0) && *len > 0)
+	{
+		*ptr = value;
+		++ptr;
+		*len = *len - 8;
+	}
+	return (ptr);
+}
+
+/*
+** 1- We create two types of values, one in 8 bytes, the other one in one.
+** 2- We use and logic AND to check if the memory is aligned.
+** 3- While it is not aligned, we set byte per byte.
+** 4- We cast the smaller pointer to a bigger one, so we need to cast to void
+** before to avoid compilation problems.
+** 5- Once we are aligned, as long as we have at least 8 bytes, we copy using
+** the entire register to be faster on big value.
+** 6- If we have less than 8 byt to copy, we copy byte per byte.
+*/
+
+void					*ft_memset(void *b, int c, size_t len)
+{
+	t_byte			*byte_ptr;
+	t_x64register	*x64_ptr;
+	t_byte			byte;
+	t_x64register	x64;
+
+	byte_ptr = (t_byte *)b;
+	byte = (t_byte)c;
+	x64 = (t_byte)c;
+	x64 = (x64 << 56) | (x64 << 48) | (x64 << 40) | (x64 << 32) | (x64 << 24)
+		| (x64 << 16) | (x64 << 8) | x64;
+	byte_ptr = ft_cpy_first_bytes(byte_ptr, byte, &len);
+	x64_ptr = (t_x64register *)(unsigned long)byte_ptr;
+	x64_ptr = ft_cpyx64(x64_ptr, x64, &len);
+	byte_ptr = (t_byte *)x64_ptr;
+	while (len > 0)
+	{
+		*byte_ptr = byte;
+		++byte_ptr;
+		--len;
+	}
+	return ((t_byte *)b);
+}

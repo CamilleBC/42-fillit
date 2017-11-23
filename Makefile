@@ -10,90 +10,58 @@
 #*                                                                            *#
 #* ************************************************************************** *#
 
-#TARGET_EXEC ?= fillit
-#
-#CC = gcc
-#
-#BUILD_DIR ?= ./build
-#LIB_DIR ?= ./lib
-#SRC_DIR ?= .
-#INC_DIR := .
-#
-#SRCS := main.c
-#OBJECTSS := $(SRCS:%=$(BUILD_DIR)/%.o)
-#DEPS := $(OBJECTSS:.o=.d)
-#
-#INC_FLAGS := $(addprefix -I,$(INC_DIRS))
-#LDFLAGS := -I$(LIB_DIR)
-#
-#CFLAGS ?= $(INC_FLAGS) -Wall -Werror -Wextra
-#
-#$(BUILD_DIR)/$(TARGET_EXEC): $(OBJECTSS)
-#		$(CC) $(OBJECTSS) -o $@ $(LDFLAGS)
-#
-#$(BUILD_DIR)/%.o: %.c
-#	$(MKDIR_P) $(dir $@)
-#	$(CC) $(CFLAGS) -c $< -o $@
-#
-#.PHONY: clean
-#
-#clean:
-#	$(RM) -r $(BUILD_DIR)
-#
-#fclean: clean
-#	$(RM) $(TARGET_EXEC)
-#
-#-include $(DEPS)
-#
-#MKDIR_P ?= mkdir -p
-#
-#############################################
+TARGET_EXEC := fillit
 
-TARGET_EXEC = fillit
-CC = gcc
-RM = /bin/rm
-MKDIR_P ?= mkdir -p
+#directories
+SRCS_DIR  := ./srcs
+INC_DIR   := ./srcs
+BUILD_DIR := ./build
+LIB_DIR   := ./lib
 
-CFLAGS = -Wall -Werror -Wextra -I$(INC_DIR)
+# src / obj files
+SRCS    := main.c
+OBJECTS := $(patsubst %,$(BUILD_DIR)/%,$(SRCS:.c=.o))
+# objects dependencies
+DEPS       = $(OBJECTS:.o:.d)
+DEPS_FLAGS = -MD -MP
 
-INC_DIR = .
-BUILD_DIR = build
+# # compiler and flags
+CC     := gcc
+CFLAGS := -Wall -Wextra -Werror
 
-LIB_DIR := ./lib
-LIBS = ft
-LIB_FLAGS = -L$(LIB_DIR) -l$(LIBS)
+# # libraries
+LIBS := ft
+LIB_FLAGS := -L$(LIB_DIR) -l$(LIBS)
 
-_DEPS = fillit.h /lib/libft.h
-#DEPS = $(patsubst %,$(INC_DIR)/%,$(_DEPS))
+# echo output colours
+RED  = \033[1;31m
+CYAN = \e[1;36m
+NC   = \033[0m
 
-_OBJECTS = main.o
-OBJECTS = $(patsubst %,$(BUILD_DIR)/%,$(_OBJECTS))
+.PHONY: all clean fclean re
 
-
-all: $(TARGET_EXEC)
+all:
+	@mkdir -p $(BUILD_DIR)
+	@make -C $(LIB_DIR)/
+	@make $(TARGET_EXEC)
 
 $(TARGET_EXEC): $(OBJECTS)
-	@echo "[exec] ..."
-	@gcc -o $@ $^ $(CFLAGS) $(LIB_FLAGS)
-	@echo "[exec] BUILT"
+	@echo "[Building ${RED}executable${NC}]"
+	@$(CC) $(CFLAGS) $(OBJECTS) $(LIB_FLAGS) -o $(TARGET_EXEC)
 
-$(BUILD_DIR)/%.o: %.c $(DEPS)
-	@echo "[objects] ..."
-	@$(MKDIR_P) $(BUILD_DIR)
-	@$(CC) -c -o $@ $< $(CFLAGS)
-	@echo "[objects] BUILT"
-
-.PHONY: clean fclean
+$(BUILD_DIR)/%.o:$(SRCS_DIR)/%.c
+	@$(CC) $(CFLAGS) $(DEPS_FLAGS) -I $(INC_DIR) -o $@ -c $<
 
 clean:
-	@echo "[clean] ..."
-	@$(RM) -rf $(BUILD_DIR)
-	@echo "[clean] DONE"
+	@echo "[Cleaning ${RED}executable${NC} objects]"
+	@make clean -C $(LIB_DIR)
+	@rm -rf $(BUILD_DIR)
 
 fclean: clean
-	@echo "[fclean] ..."
-	@$(RM) -f $(TARGET_EXEC)
-	@echo "[fclean] DONE"
+	@echo  "[Cleaning ${RED}executable${NC}]"
+	@make fclean -C $(LIB_DIR)
+	@rm -rf $(TARGET_EXEC)
 
-re: fclean $(TARGET_EXEC)
-	@echo "[re] DONE"
+re: fclean all
+
+-include $(DEPS)

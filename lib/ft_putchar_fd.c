@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbaillat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/21 12:50:21 by cbaillat          #+#    #+#             */
-/*   Updated: 2017/11/21 17:44:49 by cbaillat         ###   ########.fr       */
+/*   Created: 2017/11/20 14:07:04 by cbaillat          #+#    #+#             */
+/*   Updated: 2017/11/20 14:08:01 by cbaillat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fillit.h"
-#include "lib/libft.h"
+#include "libft.h"
 
-int	main(int ac, char **av)
+void	ft_putchar_fd(char c, int fd)
 {
-	if (ac != 2)
-		return (0);
-	ft_strlen(av[1]);
-	printf("%s\n", av[1]);
-	return (0);
+	write(fd, &c, 1);
 }

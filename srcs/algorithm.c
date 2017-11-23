@@ -6,8 +6,15 @@
 /*   By: cbaillat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 14:39:35 by cbaillat          #+#    #+#             */
-/*   Updated: 2017/11/23 14:44:38 by cbaillat         ###   ########.fr       */
+/*   Updated: 2017/11/23 15:38:02 by cbaillat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "fillit.h"
 
+static uint32_t	ft_get_min_size(t_tetri *piece_list)
+{
+	uint32_t	size;
+
+	while
+}

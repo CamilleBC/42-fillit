@@ -1,24 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   algorithm.c                                        :+:      :+:    :+:   */
+/*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbaillat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cbaillat <cbaillat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/23 14:39:35 by cbaillat          #+#    #+#             */
-/*   Updated: 2017/11/23 19:21:53 by cbaillat         ###   ########.fr       */
+/*   Created: 2017/11/14 18:02:20 by cbaillat          #+#    #+#             */
+/*   Updated: 2017/11/23 19:06:03 by cbaillat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fillit.h"
+#include "libft.h"
 
-static uint32_t	ft_get_min_size(t_tetri *tetriminos)
+char	*ft_strcat(char *s1, const char *s2)
 {
-	uint32_t	size;
+	char *s1_original;
 
-	if (tetriminos == NULL)
-		return (FAILURE);
-	while (tetriminos->next != NULL)
-		++size;
-
+	s1_original = s1;
+	while (*s1 != '\0')
+		++s1;
+	while (*s2 != '\0')
+	{
+		*s1 = *s2;
+		++s1;
+		++s2;
+	}
+	*s1 = '\0';
+	return (s1_original);
 }

@@ -10,13 +10,13 @@
 #*                                                                            *#
 #* ************************************************************************** *#
 
-TARGET_EXEC  := fillit
+TARGET_DBG := fillit_debug
 
 #directories
-SRCS_DIR  := ./srcs
-INC_DIR   := ./srcs
-BUILD_DIR := ./build
-LIB_DIR   := ./lib
+SRCS_DIR  := ../srcs
+INC_DIR   := ../srcs
+BUILD_DIR := ../build
+LIB_DIR   := ../lib
 
 # src / obj files
 SRCS    :=	main.c \
@@ -28,16 +28,15 @@ DEPS_FLAGS = -MD -MP
 
 # # compiler and flags
 CC     := gcc
-CFLAGS := -Wall -Wextra -Werror
+DBG_FLAGS := -Og -g
 
 # # libraries
 LIBS := ft
 LIB_FLAGS := -L$(LIB_DIR) -l$(LIBS)
 
 # echo output colours
-CYAN = \e[1;36m
-RED  = \033[1;31m
 WHITE  = \033[1;37m
+CYAN = \e[1;36m
 NC   = \033[0m
 
 .PHONY: all clean fclean re
@@ -45,25 +44,24 @@ NC   = \033[0m
 all:
 	@mkdir -p $(BUILD_DIR)
 	@make -C $(LIB_DIR)/
-	@make $(TARGET_EXEC)
+	@make $(TARGET_DBG)
 
-$(TARGET_EXEC): $(OBJECTS)
-	@echo "[Building ${RED}executable${NC}]"
-	@$(CC) $(CFLAGS) $(OBJECTS) $(LIB_FLAGS) -o $(TARGET_EXEC)
+$(TARGET_DBG): $(OBJECTS)
+	@echo "[Building ${WHITE}debug${NC}]"
+	@$(CC) $(DBG_FLAGS) $(OBJECTS) $(LIB_FLAGS) -o $(TARGET_DBG)
 
 $(BUILD_DIR)/%.o:$(SRCS_DIR)/%.c
-	@echo "[Building $@...]"
-	@$(CC) $(CFLAGS) $(DEPS_FLAGS) -I $(INC_DIR) -o $@ -c $<
+	@$(CC) $(DBG_FLAGS) $(DEPS_FLAGS) -I $(INC_DIR) -o $@ -c $<
 
 clean:
-	@echo "[Cleaning ${RED}executable${NC} objects]"
+	@echo "[Cleaning ${WHITE}debug${NC} objects]"
 	@make clean -C $(LIB_DIR)
 	@rm -rf $(BUILD_DIR)
 
 fclean: clean
-	@echo  "[Cleaning ${RED}executable${NC}]"
+	@echo  "[Cleaning ${WHITE}debug${NC}]"
 	@make fclean -C $(LIB_DIR)
-	@rm -rf $(TARGET_EXEC)
+	@rm -rf $(TARGET_DBG)
 
 re: fclean all
 

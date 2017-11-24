@@ -6,13 +6,13 @@
 /*   By: cbaillat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 14:39:35 by cbaillat          #+#    #+#             */
-/*   Updated: 2017/11/24 11:31:04 by cbaillat         ###   ########.fr       */
+/*   Updated: 2017/11/24 16:36:03 by cbaillat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-static t_bool	get_solutionsize(t_tetri *tetri, uint32_t *min_size,
+t_bool	get_solutionsize(t_tetri *tetri, uint32_t *min_size,
 		uint32_t *max_size)
 {
 	uint32_t	elements;
@@ -37,9 +37,46 @@ static t_bool	get_solutionsize(t_tetri *tetri, uint32_t *min_size,
 	return (SUCCESS);
 }
 
-static t_bool	place_tetri(t_tetri *tetri, t_map *map, uint32_t location)
+/*
+** We AND the map with the tetri.
+** We get 1 only if there is something on the map already.
+** If so, we return a failure.
+*/
+
+static t_bool	check_map(t_tetri *tetri, t_map map, uint32_t x, uint32_t y)
 {
 	uint32_t i;
 
-	if (tetri[i] 
+	i = 0;
+	while ((y + i) < (y + tetri->length))
+	{
+		if (tetri->tetriminos[i] & ((*map)[y+i] << x))
+			return (FAILURE);
+		++i;
+	}
+	return (SUCCESS);
+}
+
+/*
+** We XOR the map with the tetri.
+** We get 1 if there is the piece and nothing on the map.
+** We get 1 if there is nothing for the piece but something on the map.
+** Else we have 0.
+*/
+
+t_bool	place_tetri(t_tetri *tetri, t_map map, uint32_t x, uint32_t y)
+{
+	uint32_t i;
+	uint32_t map_offset;
+
+	if (check_map(tetri, map, x, y) != SUCCESS)
+			return (FAILURE);
+	i = 0;
+	while ((y + i) < (y + tetri->length))
+	{
+		map_offset = (*map)[y + i] << x;
+		map_offset ^= tetri->tetriminos[i];
+		++i;
+	}
+	return (SUCCESS);
 }

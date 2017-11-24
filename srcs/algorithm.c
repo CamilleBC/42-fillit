@@ -6,7 +6,7 @@
 /*   By: cbaillat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 14:39:35 by cbaillat          #+#    #+#             */
-/*   Updated: 2017/11/24 16:36:03 by cbaillat         ###   ########.fr       */
+/*   Updated: 2017/11/24 18:03:21 by cbaillat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,7 @@ t_bool	place_tetri(t_tetri *tetri, t_map map, uint32_t x, uint32_t y)
 	i = 0;
 	while ((y + i) < (y + tetri->length))
 	{
-		map_offset = (*map)[y + i] << x;
-		map_offset ^= tetri->tetriminos[i];
+		(*map)[y] = (*map)[y] ^ (tetri->tetriminos[i] << x);
 		++i;
 	}
 	return (SUCCESS);

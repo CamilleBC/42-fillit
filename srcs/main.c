@@ -6,7 +6,7 @@
 /*   By: cbaillat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 12:50:21 by cbaillat          #+#    #+#             */
-/*   Updated: 2017/11/24 16:30:46 by cbaillat         ###   ########.fr       */
+/*   Updated: 2017/11/24 17:08:45 by cbaillat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int	main(void)
 	uint32_t	*map_ptr;
 	uint32_t	map_data[8] = {0};
 	char		binary[33];
+	int			i1;
+	int			i2;
 
 	tetri.tetriminos[0] = 0b0100;
 	tetri.tetriminos[1] = 0b1100;
@@ -60,16 +62,21 @@ int	main(void)
 	map = &map_ptr;
 
 	printf("Empty map:\n");
-	int i = 0;
-	while (i < 8)
+	i1 = 0;
+	while (i1 < 8)
 	{
-		itoa((*map)[i], binary, 2);
+		itoa((*map)[i1], binary, 2);
 		printf("%s\n", binary);
-		++i;
+		i1++;
 	}
 	place_tetri(&tetri, map, 1, 1);
 	printf("Filled map:\n");
-	for (int i = 0; i < 8; ++i)
-		printf("%d\n", (*map)[i]);
+	i2 = 0;
+	while (i2 < 8)
+	{
+		itoa((*map)[i1], binary, 2);
+		printf("%s\n", binary);
+		i2++;
+	}
 	return (0);
 }

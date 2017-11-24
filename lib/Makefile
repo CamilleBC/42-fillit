@@ -97,7 +97,6 @@ $(TARGET_LIB): $(LIB_OBJECTS)
 	@ar rc $(TARGET_LIB) $(LIB_OBJECTS)
 
 $(LIB_BUILD_DIR)/%.o:%.c
-	@echo "[Building $@...]"
 	@$(CC) $(LIB_CFLAGS) -I$(LIB_INC_DIR) -o $@ -c $<
 
 clean:

@@ -6,7 +6,7 @@
 /*   By: cbaillat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 15:10:55 by cbaillat          #+#    #+#             */
-/*   Updated: 2017/11/24 16:36:51 by cbaillat         ###   ########.fr       */
+/*   Updated: 2017/11/24 16:42:06 by cbaillat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <unistd.h>
 # include <stdlib.h>
-# include "lib/libft.h"
+# include "../lib/libft.h"
 
 # define SUCCESS	(t_bool)0
 # define FAILURE	(t_bool)1

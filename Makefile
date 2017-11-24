@@ -10,7 +10,7 @@
 #*                                                                            *#
 #* ************************************************************************** *#
 
-TARGET_EXEC := fillit
+TARGET_EXEC  := fillit
 
 #directories
 SRCS_DIR  := ./srcs
@@ -19,7 +19,8 @@ BUILD_DIR := ./build
 LIB_DIR   := ./lib
 
 # src / obj files
-SRCS    := main.c
+SRCS    :=	main.c \
+			algorithm.c
 OBJECTS := $(patsubst %,$(BUILD_DIR)/%,$(SRCS:.c=.o))
 # objects dependencies
 DEPS       = $(OBJECTS:.o:.d)
@@ -34,8 +35,9 @@ LIBS := ft
 LIB_FLAGS := -L$(LIB_DIR) -l$(LIBS)
 
 # echo output colours
-RED  = \033[1;31m
 CYAN = \e[1;36m
+RED  = \033[1;31m
+WHITE  = \033[1;37m
 NC   = \033[0m
 
 .PHONY: all clean fclean re

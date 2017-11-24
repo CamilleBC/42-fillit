@@ -6,7 +6,7 @@
 /*   By: cbaillat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 15:10:55 by cbaillat          #+#    #+#             */
-/*   Updated: 2017/11/24 11:14:43 by cbaillat         ###   ########.fr       */
+/*   Updated: 2017/11/24 15:05:23 by cbaillat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,24 @@
 
 # include <unistd.h>
 # include <stdlib.h>
-# include "lib/libft.h"
 
 # define SUCCESS	(t_bool)0
 # define FAILURE	(t_bool)1
 # define SEP		(char)'\n'
 
-typedef struct	s_tetri
+typedef struct		s_tetri
 {
-	char			*tetriminos;
+	uint32_t		tetriminos[4];
 	char			rank;
 	uint8_t			length;
 	uint8_t			width;
 	struct s_tetri	*next;
 	struct s_tetri	*prev;
-}				t_tetri;
+}					t_tetri;
 
-typedef uint8_t	t_bool;
-typedef char	t_map;
+typedef uint8_t		t_bool;
+typedef uint32_t	**t_map;
+
+char* itoa(int value, char* result, int base);
 
 #endif

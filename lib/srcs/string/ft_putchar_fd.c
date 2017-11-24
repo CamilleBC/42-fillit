@@ -1,30 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   algorithm.c                                        :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbaillat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/23 14:39:35 by cbaillat          #+#    #+#             */
-<<<<<<< Updated upstream
-/*   Updated: 2017/11/23 14:44:38 by cbaillat         ###   ########.fr       */
-=======
-/*   Updated: 2017/11/23 16:04:04 by cbaillat         ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Created: 2017/11/20 14:07:04 by cbaillat          #+#    #+#             */
+/*   Updated: 2017/11/23 19:06:03 by cbaillat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 
-<<<<<<< Updated upstream
-=======
-static uint32_t	ft_get_min_size(t_tetri *tetriminos)
+void	ft_putchar_fd(char c, int fd)
 {
-	uint32_t	size;
-
-	if (tetriminos == NULL)
-		return (FAILURE);
-	while (tetriminos->next != NULL)
-		++size;
-
+	write(fd, &c, 1);
 }
->>>>>>> Stashed changes

@@ -6,7 +6,7 @@
 /*   By: cbaillat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 15:10:55 by cbaillat          #+#    #+#             */
-/*   Updated: 2017/11/24 16:42:06 by cbaillat         ###   ########.fr       */
+/*   Updated: 2017/11/27 10:08:45 by cbaillat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,14 @@ typedef struct		s_tetri
 	uint8_t			width;
 	struct s_tetri	*next;
 	struct s_tetri	*prev;
-}				t_tetri;
+}					t_tetri;
+
+typedef struct		s_map
+{
+	uint32_t		**map;
+	uint8_t			size;
+}					t_map;
 
 typedef uint8_t		t_bool;
-typedef uint32_t	**t_map;
-
-char* itoa(int value, char* result, int base);
 
 #endif

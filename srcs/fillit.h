@@ -6,7 +6,7 @@
 /*   By: cbaillat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 15:10:55 by cbaillat          #+#    #+#             */
-/*   Updated: 2017/11/27 10:08:45 by cbaillat         ###   ########.fr       */
+/*   Updated: 2017/11/27 12:03:26 by cbaillat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ typedef struct		s_tetri
 	char			rank;
 	uint8_t			length;
 	uint8_t			width;
+	uint8_t			x;
+	uint8_t			y;
 	struct s_tetri	*next;
 	struct s_tetri	*prev;
 }					t_tetri;

@@ -6,7 +6,7 @@
 /*   By: cbaillat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 12:50:21 by cbaillat          #+#    #+#             */
-/*   Updated: 2017/11/27 10:35:53 by cbaillat         ###   ########.fr       */
+/*   Updated: 2017/11/27 10:49:47 by cbaillat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,40 +25,49 @@ static char	*itoa(int value, char *result, int base)
 	char	*ptr;
 	char	*ptr1;
 	char	tmp_char;
-	int tmp_value;
+	int		tmp_value;
 
 	ptr = result;
 	ptr1 = result;
-	if (base < 2 || base > 36) { *result = '\0'; return result; }
+	if (base < 2 || base > 36)
+	{
+		*result = '\0';
+		return (result);
+	}
 	do {
 		tmp_value = value;
 		value /= base;
 		*ptr++ = "zyxwvutsrqponmlkjihgfedcba9876543210123456789\
-			abcdefghijklmnopqrstuvwxyz" [35 + (tmp_value - value * base)];
-	} while ( value );
-	if (tmp_value < 0) *ptr++ = '-';
+			abcdefghijklmnopqrstuvwxyz"[35 + (tmp_value - value * base)];
+	}
+	while (value);
+	if (tmp_value < 0)
+		*ptr++ = '-';
 	*ptr-- = '\0';
-	while(ptr1 < ptr) {
+	while (ptr1 < ptr)
+	{
 		tmp_char = *ptr;
-		*ptr--= *ptr1;
+		*ptr-- = *ptr1;
 		*ptr1++ = tmp_char;
 	}
-	return result;
+	return (result);
 }
 
 static int	print_padleftzeroes(const char *s, size_t width)
 {
-	size_t n = strlen(s);
-	if(width < n)
-		return -1;
-	while(width > n)
+	size_t n;
+
+	n = strlen(s);
+	if (width < n)
+		return (-1);
+	while (width > n)
 	{
 		putchar('0');
 		width--;
 	}
 	fputs(s, stdout);
 	putchar('\n');
-	return 0;
+	return (0);
 }
 
 int			main(void)

@@ -13,7 +13,7 @@
 TARGET_LIB = libft.a
 
 CC         = gcc
-LIB_CFLAGS = -Wall -Werror -Wextra -O3
+LIB_CFLAGS = -Wall -Werror -Wextra
 
 LIB_SRCS = 	ft_sqrt.c
 LIB_SRCS +=	ft_bzero.c \

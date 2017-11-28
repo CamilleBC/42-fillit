@@ -6,21 +6,15 @@
 /*   By: cbaillat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 12:50:21 by cbaillat          #+#    #+#             */
-/*   Updated: 2017/11/27 10:49:47 by cbaillat         ###   ########.fr       */
+/*   Updated: 2017/11/28 17:08:52 by cbaillat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 #include "map.h"
+#include "algorithm.h"
 
-/*
-** DEBUG
-*/
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-static char	*itoa(int value, char *result, int base)
+char	*itoa(int value, char *result, int base)
 {
 	char	*ptr;
 	char	*ptr1;
@@ -70,58 +64,117 @@ static int	print_padleftzeroes(const char *s, size_t width)
 	return (0);
 }
 
+void	print_map(t_map map)
+{
+	uint32_t	i;
+	char		binary[33];
+
+	printf("Map:\n");
+	i = 0;
+	while (i < map.size)
+	{
+		itoa(map.map[i], binary, 2);
+		print_padleftzeroes(binary, map.size);
+		++i;
+	}
+	printf("\n");
+}
+
+static void	print_tetriminos(t_tetri *tetri)
+{
+	uint32_t	i;
+	uint32_t	j;
+	char		binary[33];
+
+	i = 1;
+	while (tetri != NULL)
+	{
+		j = 0;
+		printf("Tetriminos %02d:\n", i);
+		while (j < 4)
+		{
+			itoa(tetri->tetriminos[j], binary, 2);
+			print_padleftzeroes(binary, 4);
+			++j;
+		}
+		printf("\n");
+		++i;
+		tetri = tetri->next;
+	}
+}
+
 int			main(void)
 {
-	t_tetri		tetri;
+	t_tetri		tetri1;
+	t_tetri		tetri2;
+	t_tetri		tetri3;
+	t_tetri		tetri4;
 	t_map		map;
-	uint32_t	*map_ptr;
-	uint32_t	map_data[8] = {
-		0b01000000,
-		0b01000000,
-		0b01000000,
-		0b01000000,
-		0b01000000,
-		0b01000000,
-		0b01000000,
-		0b01000000};
-	char		binary[33];
 	int			i1;
-	int			i2;
-	int			i3;
 
-	tetri.tetriminos[0] = 0b0001;
-	tetri.tetriminos[1] = 0b0011;
-	tetri.tetriminos[2] = 0b0010;
-	tetri.tetriminos[3] = 0b0000;
-	tetri.length = 3;
-	tetri.width = 2;
-	map_ptr = map_data;
-	map.map = &map_ptr;
-	map.size = 8;
-	printf("Empty map:\n");
-	i1 = 0;
-	while (i1 < 8)
+	tetri1.tetriminos[0] = 0b0001;
+	tetri1.tetriminos[1] = 0b0011;
+	tetri1.tetriminos[2] = 0b0010;
+	tetri1.tetriminos[3] = 0b0000;
+	tetri1.length = 3;
+	tetri1.width = 2;
+	tetri1.x = 0;
+	tetri1.y = 0;
+	tetri1.prev = NULL;
+	tetri1.next = &tetri2;
+
+	tetri2.tetriminos[0] = 0b0001;
+	tetri2.tetriminos[1] = 0b0111;
+	tetri2.tetriminos[2] = 0b0000;
+	tetri2.tetriminos[3] = 0b0000;
+	tetri2.length = 2;
+	tetri2.width = 3;
+	tetri2.x = 0;
+	tetri2.y = 0;
+	tetri2.prev = &tetri1;
+	tetri2.next = &tetri3;
+
+	tetri3.tetriminos[0] = 0b0001;
+	tetri3.tetriminos[1] = 0b0111;
+	tetri3.tetriminos[2] = 0b0000;
+	tetri3.tetriminos[3] = 0b0000;
+	tetri3.length = 2;
+	tetri3.width = 3;
+	tetri3.x = 0;
+	tetri3.y = 0;
+	tetri3.prev = &tetri2;
+	tetri3.next = &tetri4;
+	
+	tetri4.tetriminos[0] = 0b0001;
+	tetri4.tetriminos[1] = 0b0111;
+	tetri4.tetriminos[2] = 0b0000;
+	tetri4.tetriminos[3] = 0b0000;
+	tetri4.length = 2;
+	tetri4.width = 3;
+	tetri4.x = 0;
+	tetri4.y = 0;
+	tetri4.prev = &tetri3;
+	tetri4.next = NULL;
+
+	// DEBUG
+	system("clear");
+	print_tetriminos(&tetri1);
+	sleep(4);
+	system("clear");
+	// DEBUG
+
+	map.map = NULL;
+	map.size = get_map_minsize(&tetri1);
+	while (1)
 	{
-		itoa((*map.map)[i1], binary, 2);
-		print_padleftzeroes(binary, 8);
-		i1++;
+		printf("Size = %d\n", map.size);
+		create_map(&map);
+		if (solve_map(&tetri1, &map) == SUCCESS)
+		{
+			free(map.map);
+			break ;
+		}
+		map.size += 1;
 	}
-	printf("Tetriminos:\n");
-	i2 = 0;
-	while (i2 < 4)
-	{
-		itoa(tetri.tetriminos[i2], binary, 2);
-		print_padleftzeroes(binary, 4);
-		i2++;
-	}
-	place_tetri(&tetri, &map, 0, 0);
-	printf("Filled map:\n");
-	i3 = 0;
-	while (i3 < 8)
-	{
-		itoa((*map.map)[i3], binary, 2);
-		print_padleftzeroes(binary, 8);
-		i3++;
-	}
-	return (0);
+	return (SUCCESS);
 }

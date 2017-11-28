@@ -6,7 +6,7 @@
 /*   By: cbaillat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 15:10:55 by cbaillat          #+#    #+#             */
-/*   Updated: 2017/11/27 12:03:26 by cbaillat         ###   ########.fr       */
+/*   Updated: 2017/11/28 17:08:13 by cbaillat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,14 @@
 
 # include <unistd.h>
 # include <stdlib.h>
-# include "../lib/libft.h"
+#include "../lib/libft.h"
+
+/*
+** DEBUG
+*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 # define SUCCESS	(t_bool)0
 # define FAILURE	(t_bool)1
@@ -35,10 +42,15 @@ typedef struct		s_tetri
 
 typedef struct		s_map
 {
-	uint32_t		**map;
+	uint32_t		*map;
 	uint8_t			size;
 }					t_map;
 
 typedef uint8_t		t_bool;
+
+/*
+** DEBUG
+*/
+void	print_map(t_map map);
 
 #endif

@@ -134,7 +134,7 @@ int			main(void)
 	tetri3.length = 2;
 	tetri3.width = 3;
 	tetri3.next = &tetri4;
-	
+
 	tetri4.tetriminos[0] = 0b0001;
 	tetri4.tetriminos[1] = 0b0111;
 	tetri4.tetriminos[2] = 0b0000;
@@ -164,4 +164,50 @@ int			main(void)
 		map.size += 1;
 	}
 	return (SUCCESS);
+}
+
+// TIM
+
+t_tetri *storepieces(char *av)
+{
+    t_tetri *pieces;
+    char str[SIZE + 1];
+    unsigned int i;
+		unsigned int check;
+    int fd;
+    int ret;
+
+		check = 0;
+    i = 0;
+    fd = open(av, O_RDONLY);
+    if (fd == -1)
+        return (error("error"));
+    while ((ret = read(fd, str, SIZE + 1)))
+    {
+        str[ret - 1] = '\0';
+        if (ret == 21)
+            check++;
+        if (!tetriminocheck(str))
+            return (error("error"));
+        i++;
+    }
+    if (i == 0 || check == i)
+        return (error("error"));
+    close(fd);
+    return (pieces);
+}
+
+int        main(int argc, char **argv)
+{
+    t_tetri		*tmp;
+
+    if (argc != 2)
+        return ((int)error("usage: ./fillit target_file"));
+    tmp = storepieces(argv[1]);
+    if (!tmp)
+        return (0);
+				/*
+				** SOLVE + print
+				*/
+    return (0);
 }

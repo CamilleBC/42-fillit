@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fillit.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbaillat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cbaillat <cbaillat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 15:10:55 by cbaillat          #+#    #+#             */
-/*   Updated: 2017/11/28 17:08:13 by cbaillat         ###   ########.fr       */
+/*   Updated: 2017/11/30 13:23:03 by cbaillat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ typedef struct		s_tetri
 	uint8_t			x;
 	uint8_t			y;
 	struct s_tetri	*next;
-	struct s_tetri	*prev;
 }					t_tetri;
 
 typedef struct		s_map

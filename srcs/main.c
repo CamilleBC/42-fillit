@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbaillat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cbaillat <cbaillat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 12:50:21 by cbaillat          #+#    #+#             */
-/*   Updated: 2017/11/28 17:08:52 by cbaillat         ###   ########.fr       */
+/*   Updated: 2017/11/30 12:28:47 by cbaillat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,6 @@ int			main(void)
 	t_tetri		tetri3;
 	t_tetri		tetri4;
 	t_map		map;
-	int			i1;
 
 	tetri1.tetriminos[0] = 0b0001;
 	tetri1.tetriminos[1] = 0b0011;
@@ -118,9 +117,6 @@ int			main(void)
 	tetri1.tetriminos[3] = 0b0000;
 	tetri1.length = 3;
 	tetri1.width = 2;
-	tetri1.x = 0;
-	tetri1.y = 0;
-	tetri1.prev = NULL;
 	tetri1.next = &tetri2;
 
 	tetri2.tetriminos[0] = 0b0001;
@@ -129,9 +125,6 @@ int			main(void)
 	tetri2.tetriminos[3] = 0b0000;
 	tetri2.length = 2;
 	tetri2.width = 3;
-	tetri2.x = 0;
-	tetri2.y = 0;
-	tetri2.prev = &tetri1;
 	tetri2.next = &tetri3;
 
 	tetri3.tetriminos[0] = 0b0001;
@@ -140,9 +133,6 @@ int			main(void)
 	tetri3.tetriminos[3] = 0b0000;
 	tetri3.length = 2;
 	tetri3.width = 3;
-	tetri3.x = 0;
-	tetri3.y = 0;
-	tetri3.prev = &tetri2;
 	tetri3.next = &tetri4;
 	
 	tetri4.tetriminos[0] = 0b0001;
@@ -151,9 +141,6 @@ int			main(void)
 	tetri4.tetriminos[3] = 0b0000;
 	tetri4.length = 2;
 	tetri4.width = 3;
-	tetri4.x = 0;
-	tetri4.y = 0;
-	tetri4.prev = &tetri3;
 	tetri4.next = NULL;
 
 	// DEBUG

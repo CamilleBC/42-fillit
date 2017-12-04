@@ -21,7 +21,8 @@ LIB_DIR   := ../lib
 # src / obj files
 SRCS    :=	main.c \
 			map.c \
-			algorithm.c
+			algorithm.c \
+			output.c
 OBJECTS := $(patsubst %,$(BUILD_DIR)/%,$(SRCS:.c=.o))
 # objects dependencies
 DEPS       = $(OBJECTS:.o:.d)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   algorithm.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbaillat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cbaillat <cbaillat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 14:39:35 by cbaillat          #+#    #+#             */
-/*   Updated: 2017/11/30 16:24:47 by tifuret          ###   ########.fr       */
+/*   Updated: 2017/12/04 09:15:40 by cbaillat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,6 @@ t_bool	solve_map(t_tetri *tetris, t_map *map)
 			if (check_map(*tetris, *map, x, y) == SUCCESS)
 			{
 				place_on_map(*tetris, map, x, y);
-
-				// DEBUG
-				sleep(1);
-				system("clear");
-				print_map(*map);
-				// DEBUG
-
 				if (solve_map(tetris->next, map) == SUCCESS)
 					return (SUCCESS);
 				else

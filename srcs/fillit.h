@@ -6,7 +6,7 @@
 /*   By: cbaillat <cbaillat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 15:10:55 by cbaillat          #+#    #+#             */
-/*   Updated: 2017/11/30 13:23:03 by cbaillat         ###   ########.fr       */
+/*   Updated: 2017/11/30 19:42:56 by cbaillat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 
 # define SUCCESS	(t_bool)0
 # define FAILURE	(t_bool)1
+# define TETRI_SIZE	(uint8_t)4
 # define SEP		(char)'\n'
 
 typedef struct    s_point
@@ -37,7 +38,11 @@ typedef struct    s_point
 typedef struct		s_tetri
 {
 	uint32_t		tetriminos[4];
+<<<<<<< HEAD
 	char				rank;
+=======
+	uint8_t			rank;
+>>>>>>> 6a7503fb9143ba16f68e8aeefbddd5711bcd4f8e
 	uint8_t			length;
 	uint8_t			width;
 	uint8_t			x;
@@ -53,9 +58,7 @@ typedef struct		s_map
 
 typedef uint8_t		t_bool;
 
-/*
-** DEBUG
-*/
-void	print_map(t_map map);
+// DEBUG:
+void	debug_map(t_map map);
 
 #endif

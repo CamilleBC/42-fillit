@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   algorithm.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbaillat <cbaillat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Camille Baillat <cbaillat@student.42.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 14:39:35 by cbaillat          #+#    #+#             */
-/*   Updated: 2017/12/04 09:15:40 by cbaillat         ###   ########.fr       */
+/*   Updated: 2017/12/04 16:07:40 by Camille Bai      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,15 @@ t_bool	solve_map(t_tetri *tetris, t_map *map)
 		{
 			if (check_map(*tetris, *map, x, y) == SUCCESS)
 			{
-				place_on_map(*tetris, map, x, y);
+				// ft_putstr("\nPLACING...\n");
+				place_on_map(tetris, map, x, y);
 				if (solve_map(tetris->next, map) == SUCCESS)
 					return (SUCCESS);
 				else
-					place_on_map(*tetris, map, x, y);
+				{
+					// ft_putstr("\nREMOVING...\n");
+					place_on_map(tetris, map, x, y);
+				}
 			}
 			++x;
 		}

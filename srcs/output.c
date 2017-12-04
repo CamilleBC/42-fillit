@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   output.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbaillat <cbaillat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Camille Baillat <cbaillat@student.42.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/30 16:23:23 by cbaillat          #+#    #+#             */
-/*   Updated: 2017/11/30 21:14:22 by cbaillat         ###   ########.fr       */
+/*   Updated: 2017/12/04 18:30:38 by Camille Bai      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,28 +35,34 @@ static void	initialize_map(char **map_ptr, uint8_t size)
 ** If we get a positive number, we write the letter.
 ** We calculate the coordinates using the coordinates of the tetri, and add an
 ** offset because we write in a 1D string.
+** [(y + i) * (size + 1) - 1] places us at the end of the line. we need to
+** remove 1 because we start counting at 0.
+** Now we have to remove some to get to the place where we want to put our tetri
+**
 */
 
 static void	print_tetri(t_tetri tetri, uint8_t size, char **map_str)
 {
 	uint8_t		i;
 	uint8_t		j;
-	uint16_t	tetri_offset;
-	uint16_t	map_index;
+	uint32_t	new_line;
+	uint32_t	tetri_offset;
+	uint32_t	map_index;
 
-	i = 0;
-	printf("%c\n\n", tetri.rank);
-	while (i < tetri.length)
+	i = 1;
+	while (i <= tetri.length)
 	{
 		j = 0;
-		tetri_offset = tetri.tetriminos[i] >> (TETRI_SIZE - tetri.width);
 		while (j < tetri.width)
 		{
-			if (0x01 & (tetri_offset >> j))
+			// printf("tetri i=%d j=%d: %d\n", i, j, tetri.tetriminos[i - 1] >> j);
+			// printf("mask: %d\n", (0x01 & (tetri.tetriminos[i - 1] >> j)));
+			if (0x01 & (tetri.tetriminos[i - 1] >> j))
 			{
-				map_index =  (tetri.y + i) * (size + 1) + (tetri.x + (tetri.width - j))- 1;
+				new_line = (tetri.y + i) * (size + 1);
+				tetri_offset = size - (tetri.x + tetri.width) + j;
+				map_index = new_line - tetri_offset - 2;
 				(*map_str)[map_index] = 'A' + tetri.rank;
-				printf("%c\n", (*map_str)[map_index]);
 			}
 			++j;
 		}
@@ -73,22 +79,18 @@ static void	print_tetri(t_tetri tetri, uint8_t size, char **map_str)
 
 void	print_map(t_map map, t_tetri *list)
 {
-	char	**map_ptr;
 	char	*map_string;
 
 	if (list == NULL)
 		return ;
 	if ((map_string = ft_strnew(map.size * (map.size + 1))) == NULL)
 		return ;
-	map_ptr = &map_string;
-	initialize_map(map_ptr, map.size);
-	printf("%snn", map_string);
-	while (list->next != NULL)
+	initialize_map(&map_string, map.size);
+	while (list != NULL)
 	{
-		print_tetri(*list, map.size, map_ptr);
+		print_tetri(*list, map.size, &map_string);
 		list = list->next;
 	}
-	//printf("%s", map_string);
-	//ft_putstr(map_string);
+	ft_putstr(map_string);
 	free(map_string);
 }

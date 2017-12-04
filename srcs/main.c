@@ -168,46 +168,22 @@ int			main(void)
 
 // TIM
 
-t_tetri *storepieces(char *av)
+int		main(int argc, char **argv)
 {
-    t_tetri *pieces;
-    char str[SIZE + 1];
-    unsigned int i;
-		unsigned int check;
-    int fd;
-    int ret;
-
-		check = 0;
-    i = 0;
-    fd = open(av, O_RDONLY);
-    if (fd == -1)
-        return (error("error"));
-    while ((ret = read(fd, str, SIZE + 1)))
-    {
-        str[ret - 1] = '\0';
-        if (ret == 21)
-            check++;
-        if (!tetriminocheck(str))
-            return (error("error"));
-        i++;
-    }
-    if (i == 0 || check == i)
-        return (error("error"));
-    close(fd);
-    return (pieces);
-}
-
-int        main(int argc, char **argv)
-{
-    t_tetri		*tmp;
+    t_list		*list;
 
     if (argc != 2)
-        return ((int)error("usage: ./fillit target_file"));
-    tmp = storepieces(argv[1]);
-    if (!tmp)
-        return (0);
-				/*
-				** SOLVE + print
-				*/
+    {
+        ft_putstr("usage: fillit input_file\n");
+        return (1);
+    }
+    if ((list = reading_tetri(open(argv[1], O_RDONLY))) == NULL)
+    {
+        ft_putstr("error\n");
+        return (1);
+    }
+		/*
+		** SOLVE + print
+		*/
     return (0);
 }

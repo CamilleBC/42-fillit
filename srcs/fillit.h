@@ -28,10 +28,16 @@
 # define FAILURE	(t_bool)1
 # define SEP		(char)'\n'
 
+typedef struct    s_point
+{
+    int						x;
+    int						y;
+}                t_point;
+
 typedef struct		s_tetri
 {
 	uint32_t		tetriminos[4];
-	char			rank;
+	char				rank;
 	uint8_t			length;
 	uint8_t			width;
 	uint8_t			x;

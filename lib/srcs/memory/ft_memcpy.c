@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbaillat <cbaillat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Camille Baillat <cbaillat@student.42.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 15:52:24 by cbaillat          #+#    #+#             */
-/*   Updated: 2017/11/14 16:20:03 by cbaillat         ###   ########.fr       */
+/*   Updated: 2017/12/04 16:03:37 by Camille Bai      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 	unsigned char	*byte_dst;
 	unsigned char	*byte_src;
 
+	if (dst == src)
+		return (dst);
 	byte_dst = (unsigned char *)dst;
 	byte_src = (unsigned char *)src;
 	while (n > 0)

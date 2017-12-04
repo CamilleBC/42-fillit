@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbaillat <cbaillat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Camille Baillat <cbaillat@student.42.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/27 09:53:32 by cbaillat          #+#    #+#             */
-/*   Updated: 2017/11/30 19:45:15 by cbaillat         ###   ########.fr       */
+/*   Updated: 2017/12/04 16:25:08 by Camille Bai      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,11 @@ t_bool		check_map(t_tetri tetri, t_map map, uint32_t x, uint32_t y)
 	uint16_t	tetri_offset;
 
 	i = 0;
-	map_offset = map.size - tetri.width - x;
+
 	while (i < tetri.length)
 	{
-		tetri_offset = tetri.tetriminos[i] >> (TETRI_SIZE - tetri.width);
-		if (map.map[y + i] & (tetri_offset << map_offset))
+		tetri_offset = tetri.tetriminos[i] << (map.size - tetri.width - x);
+		if (map.map[y + i] & tetri_offset)
 			return (FAILURE);
 		++i;
 	}
@@ -85,21 +85,20 @@ t_bool		check_map(t_tetri tetri, t_map map, uint32_t x, uint32_t y)
 ** Else we have 0.
 */
 
-t_bool		place_on_map(t_tetri tetri, t_map *map, uint32_t x, uint32_t y)
+t_bool		place_on_map(t_tetri *tetri, t_map *map, uint32_t x, uint32_t y)
 {
 	uint32_t	i;
 	uint32_t	map_offset;
 	uint32_t	tetri_offset;
 
 	i = 0;
-	map_offset = map->size - tetri.width - x;
-	while (i < tetri.length)
+	tetri->x = x;
+	tetri->y = y;
+	while (i < tetri->length)
 	{
-		tetri_offset = tetri.tetriminos[i] >> (TETRI_SIZE - tetri.width);
-		map->map[y + i] ^= tetri_offset << map_offset;
+		tetri_offset = tetri->tetriminos[i] << (map->size - tetri->width - x);
+		map->map[y + i] ^= tetri_offset;
 		++i;
 	}
-	tetri.x = x;
-	tetri.y = y;
 	return (SUCCESS);
 }

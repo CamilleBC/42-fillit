@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fillit.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbaillat <cbaillat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Camille Baillat <cbaillat@student.42.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 15:10:55 by cbaillat          #+#    #+#             */
-/*   Updated: 2017/11/30 19:42:56 by cbaillat         ###   ########.fr       */
+/*   Updated: 2017/12/04 11:39:50 by Camille Bai      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,7 @@ typedef uint8_t		t_bool;
 
 // DEBUG:
 void	debug_map(t_map map);
+char	*itoa_base(int value, char *result, int base);
+void	print_tetriminos(t_tetri *tetri);
 
 #endif

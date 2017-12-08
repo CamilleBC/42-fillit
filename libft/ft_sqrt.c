@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_square.c                                        :+:      :+:    :+:   */
+/*   ft_sqrt.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbaillat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cbaillat <cbaillat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 16:08:05 by cbaillat          #+#    #+#             */
-/*   Updated: 2017/11/23 19:06:41 by cbaillat         ###   ########.fr       */
+/*   Updated: 2017/12/08 17:27:57 by cbaillat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,24 +28,10 @@
 
 uint32_t	ft_sqrt(uint32_t nb)
 {
-	uint32_t result;
-	uint32_t mask;
+	uint32_t i;
 
-	result = 0;
-	mask = 1ul << 30;
-	while (mask > nb)
-		mask >>= 2;
-	while (mask != 0)
-	{
-		if (nb >= result + mask)
-		{
-			nb = nb - (result + mask);
-			result = result + (2 * mask);
-		}
-		result >>= 1;
-		mask >>= 2;
-	}
-	if (nb > result)
-		result++;
-	return (result);
+	i = 0;
+	while (i * i < nb)
+		++i;
+	return (i);
 }

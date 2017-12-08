@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbaillat <cbaillat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tifuret <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/30 16:31:04 by tifuret           #+#    #+#             */
-/*   Updated: 2017/12/08 13:13:15 by cbaillat         ###   ########.fr       */
+/*   Created: 2017/12/08 14:47:39 by tifuret           #+#    #+#             */
+/*   Updated: 2017/12/08 14:47:48 by tifuret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 ** Bit shift = j - (tetri_size - width)
 */
 
-static t_tetri *tetris_new(char *piece[TETRI_SIZE], int width, int length, char rank)
+static t_tetri		*tetris_new(char *piece[TETRI_SIZE],
+		int width, int length, char rank)
 {
 	uint8_t		i;
 	uint8_t		j;
@@ -52,13 +53,13 @@ static t_tetri *tetris_new(char *piece[TETRI_SIZE], int width, int length, char 
 ** Reads a piece from a valid chunk, allocates a structure and populates it.
 */
 
-static t_tetri	*get_piece(char *str, char piece)
+static t_tetri		*get_piece(char *str, char piece)
 {
-	t_point *min;
-	t_point *max;
-	t_tetri *tetri;
-	char	*tetri_tab[TETRI_SIZE];
-	int		 i;
+	t_point		*min;
+	t_point		*max;
+	t_tetri		*tetri;
+	char		*tetri_tab[TETRI_SIZE];
+	int			i;
 
 	min = new_point(3, 3);
 	max = new_point(0, 0);
@@ -68,7 +69,7 @@ static t_tetri	*get_piece(char *str, char piece)
 	{
 		tetri_tab[i] = ft_strnew(max->x - min->x + 1);
 		ft_strncpy(tetri_tab[i], str + (min->x) + (i + min->y) * 5,
-				   max->x - min->x + 1);
+				max->x - min->x + 1);
 		i++;
 	}
 	tetri = tetris_new(tetri_tab, (max->x - min->x + 1),
@@ -83,10 +84,10 @@ static t_tetri	*get_piece(char *str, char piece)
 ** valid. Otherwise, our tetrimino is not contiguous.
 */
 
-static int	check_connections(char *str)
+static int			check_connections(char *str)
 {
-	int block;
-	int i;
+	int		block;
+	int		i;
 
 	block = 0;
 	i = 0;
@@ -117,10 +118,10 @@ static int	check_connections(char *str)
 ** 5- Then we check if the tetris block are all connected.
 */
 
-static int	check_input_string(char *str, int count)
+static int			check_input_string(char *str, int count)
 {
-	int i;
-	int block;
+	int		i;
+	int		block;
 
 	block = 0;
 	i = 0;
@@ -150,7 +151,7 @@ static int	check_input_string(char *str, int count)
 ** 4 lines made of 4 chars (+ newline) = 20 chars + newline = 21 chars
 */
 
-t_list		*reading_tetri(int fd)
+t_list				*reading_tetri(int fd)
 {
 	char	*tetri_tmp;
 	int		i;

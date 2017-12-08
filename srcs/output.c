@@ -6,7 +6,7 @@
 /*   By: cbaillat <cbaillat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/30 16:23:23 by cbaillat          #+#    #+#             */
-/*   Updated: 2017/12/08 10:33:24 by cbaillat         ###   ########.fr       */
+/*   Updated: 2017/12/08 14:43:30 by tifuret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** We need to initialize the map with '.' and '\n' for every printed lines
 */
 
-void	initialize_map(char **map_ptr, uint8_t size)
+void				initialize_map(char **map_ptr, uint8_t size)
 {
 	size_t	i;
 
@@ -37,10 +37,9 @@ void	initialize_map(char **map_ptr, uint8_t size)
 ** [(y + i) * (size + 1) - 1] places us at the end of the line. we need to
 ** remove 1 because we start counting at 0.
 ** Now we have to remove some to get to the place where we want to put our tetri
-**
 */
 
-static void	print_tetri(t_tetri tetri, uint8_t size, char **map_str)
+static void			print_tetri(t_tetri tetri, uint8_t size, char **map_str)
 {
 	uint8_t		i;
 	uint8_t		j;
@@ -74,10 +73,9 @@ static void	print_tetri(t_tetri tetri, uint8_t size, char **map_str)
 ** the corresponding rank character in the structure.
 */
 
-void	print_map(t_map map, t_list *list)
+void				print_map(t_map map, t_list *list)
 {
 	char	*map_string;
-
 
 	if (list == NULL || list->content == NULL)
 		return ;
@@ -86,10 +84,10 @@ void	print_map(t_map map, t_list *list)
 	initialize_map(&map_string, map.size);
 	while (list != NULL)
 	{
-		print_tetri((t_tetri)*(t_tetri *)(list->content), map.size, &map_string);
+		print_tetri((t_tetri)*(t_tetri *)(list->content), map.size,
+				&map_string);
 		list = list->next;
 	}
 	ft_putstr(map_string);
-	// Free la liste des tetris
 	free(map_string);
 }

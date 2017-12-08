@@ -6,14 +6,11 @@
 /*   By: cbaillat <cbaillat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/30 16:31:04 by tifuret           #+#    #+#             */
-/*   Updated: 2017/12/08 12:34:57 by cbaillat         ###   ########.fr       */
+/*   Updated: 2017/12/08 13:13:15 by cbaillat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "input.h"
-// DEBUG
-#include "output.h"
-
 
 /*
 ** Creates a new tetrimino structure.
@@ -178,6 +175,5 @@ t_list		*reading_tetri(int fd)
 	ft_memdel((void **)&tetri_tmp);
 	if (i != 0)
 		return (free_list(list));
-	//ft_lstrev(&list);
 	return (list);
 }

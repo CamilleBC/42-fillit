@@ -6,10 +6,11 @@
 /*   By: cbaillat <cbaillat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/30 16:31:04 by tifuret           #+#    #+#             */
-/*   Updated: 2017/12/08 13:13:15 by cbaillat         ###   ########.fr       */
+/*   Updated: 2017/12/08 15:25:37 by cbaillat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "fillit.h"
 #include "input.h"
 
 /*
@@ -137,10 +138,12 @@ static int	check_input_string(char *str, int count)
 			return (FAILURE);
 		i++;
 	}
-	if (count == 21 && str[20] != '\n')
+	if (count == TETRI_STRING && str[20] != '\n')
 		return (FAILURE);
 	if (!check_connections(str))
 		return (FAILURE);
+	if (count == TETRI_STRING && str[20] == '\n')
+		return (NEWLINE);
 	return (SUCCESS);
 }
 
@@ -152,19 +155,19 @@ static int	check_input_string(char *str, int count)
 
 t_list		*reading_tetri(int fd)
 {
-	char	*tetri_tmp;
-	int		i;
-	char	rank;
-	t_list	*list;
-	t_tetri	*tetris;
+	char			*tetri_tmp;
+	t_checktetri	check;
+	char			rank;
+	t_list			*list;
+	t_tetri			*tetris;
 
 	tetri_tmp = ft_strnew(21);
 	list = NULL;
 	rank = 'A';
-	while ((i = read(fd, tetri_tmp, TETRI_STRING)) >= 20)
+	while ((check.read = read(fd, tetri_tmp, TETRI_STRING)) >= 20)
 	{
-		if (check_input_string(tetri_tmp, i) == FAILURE || rank > 'Z'
-			|| (tetris = get_piece(tetri_tmp, rank++)) == NULL)
+		if ((check.nl = check_input_string(tetri_tmp, check.read)) == FAILURE
+				|| rank > 'Z' || (tetris = get_piece(tetri_tmp, rank++)) == NULL)
 		{
 			free(tetri_tmp);
 			return (free_list(list));
@@ -172,8 +175,10 @@ t_list		*reading_tetri(int fd)
 		ft_lstappend(&list, ft_lstnew(tetris, sizeof(t_tetri)));
 		free(tetris);
 	}
-	ft_memdel((void **)&tetri_tmp);
-	if (i != 0)
+	free(tetri_tmp);
+	if (check.read == 0 && check.nl == NEWLINE)
+		return (free_list(list));
+	if (check.read != 0)
 		return (free_list(list));
 	return (list);
 }

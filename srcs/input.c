@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tifuret <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: cbaillat <cbaillat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/30 16:31:04 by tifuret           #+#    #+#             */
-/*   Updated: 2017/12/08 15:33:26 by cbaillat         ###   ########.fr       */
+/*   Updated: 2017/12/08 15:42:04 by cbaillat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,11 @@ static t_tetri		*tetris_new(char *piece[TETRI_SIZE],
 	{
 		j = -1;
 		while (++j < width)
-		{
 			if (piece[i][j] == '#')
 			{
 				offset = (width - 1) - j;
 				tetri->tetriminos[i] ^= (1u << offset);
 			}
-		}
 	}
 	tetri->width = width;
 	tetri->length = length;
@@ -168,7 +166,7 @@ t_list				*reading_tetri(int fd)
 	while ((check.read = read(fd, tetri_tmp, TETRI_STRING)) >= 20)
 	{
 		if ((check.nl = check_input_string(tetri_tmp, check.read)) == FAILURE
-				|| rank > 'Z' || (tetris = get_piece(tetri_tmp, rank++)) == NULL)
+			|| rank > 'Z' || (tetris = get_piece(tetri_tmp, rank++)) == NULL)
 		{
 			free(tetri_tmp);
 			return (free_list(list));
@@ -177,9 +175,7 @@ t_list				*reading_tetri(int fd)
 		free(tetris);
 	}
 	free(tetri_tmp);
-	if (check.read == 0 && check.nl == NEWLINE)
-		return (free_list(list));
-	if (check.read != 0)
+	if ((check.read == 0 && check.nl == NEWLINE) || (check.read != 0))
 		return (free_list(list));
 	return (list);
 }

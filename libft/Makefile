@@ -6,17 +6,14 @@
 #    By: cbaillat <cbaillat@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/13 18:12:06 by cbaillat          #+#    #+#              #
-#    Updated: 2017/12/08 12:36:21 by cbaillat         ###   ########.fr        #
+#    Updated: 2017/12/08 16:49:41 by tifuret          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-TARGET_LIB = libft.a
+NAME = libft.a
 
-CC         = gcc
-LIB_CFLAGS = -Wall -Werror -Wextra
-
-LIB_SRCS = 	ft_sqrt.c
-LIB_SRCS +=	ft_bzero.c \
+SRC = ft_sqrt.c \
+			ft_bzero.c \
 			ft_memalloc.c \
 			ft_memchr.c \
 			ft_memcmp.c \
@@ -24,15 +21,15 @@ LIB_SRCS +=	ft_bzero.c \
 			ft_memccpy.c\
 			ft_memdel.c \
 			ft_memmove.c \
-			ft_memset.c
-LIB_SRCS +=	ft_lstnew.c \
+			ft_memset.c \
+			ft_lstnew.c \
 			ft_lstdelone.c \
 			ft_lstdel.c \
 			ft_lstadd.c \
 			ft_lstappend.c \
 			ft_lstiter.c \
-			ft_lstmap.c
-LIB_SRCS += ft_atoi.c \
+			ft_lstmap.c \
+			ft_atoi.c \
 			ft_isalnum.c \
 			ft_isalpha.c \
 			ft_isascii.c \
@@ -78,36 +75,80 @@ LIB_SRCS += ft_atoi.c \
 			ft_tolower.c \
 			ft_toupper.c
 
-# sources and objects.
-# we use the VPATH variable which causes MAKE to look for sources in all those
-# directories
-VPATH         := ./srcs/math:./srcs/memory:./srcs/lists:./srcs/string
-LIB_INC_DIR   := .
-LIB_BUILD_DIR := ./build
-LIB_OBJECTS   = $(patsubst %,$(LIB_BUILD_DIR)/%,$(LIB_SRCS:.c=.o))
+OBJ = ft_sqrt.o \
+			ft_bzero.o \
+			ft_memalloc.o \
+			ft_memchr.o \
+			ft_memcmp.o \
+			ft_memcpy.o \
+			ft_memccpy.o \
+			ft_memdel.o \
+		  ft_memmove.o \
+			ft_memset.o \
+			ft_lstnew.o \
+			ft_lstdelone.o \
+			ft_lstdel.o \
+			ft_lstadd.o \
+			ft_lstappend.o \
+			ft_lstiter.o \
+			ft_lstmap.o \
+			ft_atoi.o \
+			ft_isalnum.o \
+	 	  ft_isalpha.o \
+			ft_isascii.o \
+			ft_isdigit.o \
+			ft_isprint.o \
+			ft_itoa.o \
+		  ft_itoa_base.o \
+			ft_putchar.o \
+			ft_putchar_fd.o \
+			ft_putendl.o \
+			ft_putendl_fd.o \
+			ft_putnbr.o \
+			ft_putnbr_fd.o \
+			ft_putstr.o \
+			ft_putstr_fd.o \
+		  ft_putstr_padzeroes.o \
+			ft_strcat.o \
+			ft_strchr.o \
+			ft_strclr.o \
+			ft_strcmp.o \
+			ft_strcpy.o \
+			ft_strdel.o \
+			ft_strdup.o \
+			ft_strequ.o \
+			ft_striter.o \
+			ft_striteri.o \
+			ft_strjoin.o \
+			ft_strlcat.o \
+			ft_strlen.o \
+			ft_strmap.o \
+			ft_strmapi.o \
+			ft_strncat.o \
+			ft_strncmp.o \
+			ft_strncpy.o \
+			ft_strnequ.o \
+			ft_strnew.o \
+			ft_strnstr.o \
+			ft_strrchr.o \
+			ft_strsplit.o \
+			ft_strstr.o \
+			ft_strsub.o \
+			ft_strtrim.o \
+			ft_tolower.o \
+			ft_toupper.o
 
-# echo output colours
-RED    = \033[1;31m
-PURPLE = \033[1;35m
-NC     = \033[0m
+all: $(NAME)
 
-all:
-	@mkdir -p $(LIB_BUILD_DIR)
-	@make $(TARGET_LIB)
-
-$(TARGET_LIB): $(LIB_OBJECTS)
-	@echo "[Building ${PURPLE}library${NC}]"
-	@ar rc $(TARGET_LIB) $(LIB_OBJECTS)
-
-$(LIB_BUILD_DIR)/%.o:%.c
-	@$(CC) $(LIB_CFLAGS) -I$(LIB_INC_DIR) -o $@ -c $<
+$(NAME):
+		gcc -c -Wall -Wextra -Werror $(SRC)
+		ar rc $(NAME) $(OBJ)
+		ranlib $(NAME)
 
 clean:
-	@echo "[Cleaning ${PURPLE}lib${NC} objects]"
-	@/bin/rm -rf $(LIB_BUILD_DIR)
+		rm -f *.o
 
 fclean: clean
-	@echo "[Cleaning ${PURPLE}lib${NC} binary]"
-	@/bin/rm -f $(TARGET_LIB)
+		rm -f $(NAME)
 
 re: fclean all

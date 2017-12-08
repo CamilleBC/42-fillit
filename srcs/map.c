@@ -6,7 +6,7 @@
 /*   By: cbaillat <cbaillat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/27 09:53:32 by cbaillat          #+#    #+#             */
-/*   Updated: 2017/12/08 10:32:55 by cbaillat         ###   ########.fr       */
+/*   Updated: 2017/12/08 14:41:28 by tifuret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ t_bool		check_map(t_tetri tetri, t_map map, uint32_t x, uint32_t y)
 	uint16_t	tetri_offset;
 
 	i = 0;
-
 	while (i < tetri.length)
 	{
 		tetri_offset = tetri.tetriminos[i] << (map.size - tetri.width - x);

@@ -6,7 +6,7 @@
 /*   By: cbaillat <cbaillat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 15:10:55 by cbaillat          #+#    #+#             */
-/*   Updated: 2017/12/08 13:09:27 by cbaillat         ###   ########.fr       */
+/*   Updated: 2017/12/08 13:35:28 by cbaillat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@
 # define TETRI_SIZE		(uint8_t)4
 # define SEP			(char)'\n'
 
-typedef struct    s_point
+typedef struct		s_point
 {
-    int						x;
-    int						y;
-}                t_point;
+	int						x;
+	int						y;
+}					t_point;
 
 typedef struct		s_tetri
 {

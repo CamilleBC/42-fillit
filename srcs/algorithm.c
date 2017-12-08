@@ -6,7 +6,7 @@
 /*   By: cbaillat <cbaillat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 14:39:35 by cbaillat          #+#    #+#             */
-/*   Updated: 2017/12/08 12:24:57 by cbaillat         ###   ########.fr       */
+/*   Updated: 2017/12/08 13:32:32 by cbaillat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,14 @@ t_bool	solve_map(t_list *list, t_map *map)
 	uint32_t	y;
 	t_tetri		*tetri;
 
-
 	if (list == NULL)
 		return (SUCCESS);
 	tetri = (t_tetri *)list->content;
-	y = 0;
-	while (y + tetri->length <= map->size)
+	y = -1;
+	while (++y + tetri->length <= map->size)
 	{
-		x = 0;
-		while (x + tetri->width <= map->size)
+		x = -1;
+		while (++x + tetri->width <= map->size)
 		{
 			if (check_map(*tetri, *map, x, y) == SUCCESS)
 			{
@@ -47,9 +46,7 @@ t_bool	solve_map(t_list *list, t_map *map)
 				else
 					place_on_map(tetri, map, x, y);
 			}
-			++x;
 		}
-		++y;
 	}
 	return (FAILURE);
 }

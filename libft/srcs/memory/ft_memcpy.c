@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Camille Baillat <cbaillat@student.42.fr    +#+  +:+       +#+        */
+/*   By: cbaillat <cbaillat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/14 15:52:24 by cbaillat          #+#    #+#             */
-/*   Updated: 2017/12/04 16:03:37 by Camille Bai      ###   ########.fr       */
+/*   Created: 2017/12/08 13:29:32 by cbaillat          #+#    #+#             */
+/*   Updated: 2017/12/08 13:29:33 by cbaillat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

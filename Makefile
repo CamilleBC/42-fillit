@@ -10,7 +10,7 @@
 #*                                                                            *#
 #* ************************************************************************** *#
 
-TARGET_EXEC  := fillit
+NAME  := fillit
 
 #directories
 SRCS_DIR  := ./srcs
@@ -49,12 +49,12 @@ NC   = \033[0m
 
 all:
 	@mkdir -p $(BUILD_DIR)
-	@make -C $(LIB_DIR)/
-	@make $(TARGET_EXEC)
+	@make $(NAME)
 
-$(TARGET_EXEC): $(OBJECTS)
+$(NAME): $(OBJECTS)
 	@echo "[Building ${RED}executable${NC}]"
-	@$(CC) $(CFLAGS) $(OBJECTS) $(LIB_FLAGS) -o $(TARGET_EXEC)
+	@make -C $(LIB_DIR)/
+	@$(CC) $(CFLAGS) $(OBJECTS) $(LIB_FLAGS) -o $(NAME)
 
 $(BUILD_DIR)/%.o:$(SRCS_DIR)/%.c
 	@echo "[Building $@...]"
@@ -68,7 +68,7 @@ clean:
 fclean: clean
 	@echo  "[Cleaning ${RED}executable${NC}]"
 	@make fclean -C $(LIB_DIR)
-	@rm -rf $(TARGET_EXEC)
+	@rm -rf $(NAME)
 
 re: fclean all
 

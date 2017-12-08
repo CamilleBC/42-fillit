@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Camille Baillat <cbaillat@student.42.fr    +#+  +:+       +#+        */
+/*   By: cbaillat <cbaillat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/27 09:53:32 by cbaillat          #+#    #+#             */
-/*   Updated: 2017/12/04 16:25:08 by Camille Bai      ###   ########.fr       */
+/*   Updated: 2017/12/08 10:32:55 by cbaillat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@
 ** and then by squarng it, we get the sides' size.
 */
 
-uint32_t	get_map_minsize(t_tetri *tetri)
+uint32_t	get_map_minsize(t_list *list)
 {
 	uint32_t	elements;
 
 	elements = 1;
-	if (tetri == NULL)
+	if (list == NULL || list->content == NULL)
 		return (FAILURE);
-	while (tetri->next != NULL)
+	while (list->next != NULL)
 	{
-		tetri = tetri->next;
+		list = list->next;
 		++elements;
 	}
 	return (ft_sqrt(elements << 2));
@@ -61,7 +61,6 @@ t_bool		create_map(t_map *map)
 t_bool		check_map(t_tetri tetri, t_map map, uint32_t x, uint32_t y)
 {
 	uint32_t	i;
-	uint32_t	map_offset;
 	uint16_t	tetri_offset;
 
 	i = 0;
@@ -88,7 +87,6 @@ t_bool		check_map(t_tetri tetri, t_map map, uint32_t x, uint32_t y)
 t_bool		place_on_map(t_tetri *tetri, t_map *map, uint32_t x, uint32_t y)
 {
 	uint32_t	i;
-	uint32_t	map_offset;
 	uint32_t	tetri_offset;
 
 	i = 0;

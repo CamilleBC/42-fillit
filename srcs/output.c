@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   output.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Camille Baillat <cbaillat@student.42.fr    +#+  +:+       +#+        */
+/*   By: cbaillat <cbaillat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/30 16:23:23 by cbaillat          #+#    #+#             */
-/*   Updated: 2017/12/04 18:30:38 by Camille Bai      ###   ########.fr       */
+/*   Updated: 2017/12/08 10:33:24 by cbaillat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@
 ** We need to initialize the map with '.' and '\n' for every printed lines
 */
 
-static void	initialize_map(char **map_ptr, uint8_t size)
+void	initialize_map(char **map_ptr, uint8_t size)
 {
-	char	*map_string;
 	size_t	i;
 
 	ft_memset(*map_ptr, '.', (size * (size + 1)));
@@ -55,14 +54,12 @@ static void	print_tetri(t_tetri tetri, uint8_t size, char **map_str)
 		j = 0;
 		while (j < tetri.width)
 		{
-			// printf("tetri i=%d j=%d: %d\n", i, j, tetri.tetriminos[i - 1] >> j);
-			// printf("mask: %d\n", (0x01 & (tetri.tetriminos[i - 1] >> j)));
 			if (0x01 & (tetri.tetriminos[i - 1] >> j))
 			{
 				new_line = (tetri.y + i) * (size + 1);
 				tetri_offset = size - (tetri.x + tetri.width) + j;
 				map_index = new_line - tetri_offset - 2;
-				(*map_str)[map_index] = 'A' + tetri.rank;
+				(*map_str)[map_index] = tetri.rank;
 			}
 			++j;
 		}
@@ -77,20 +74,22 @@ static void	print_tetri(t_tetri tetri, uint8_t size, char **map_str)
 ** the corresponding rank character in the structure.
 */
 
-void	print_map(t_map map, t_tetri *list)
+void	print_map(t_map map, t_list *list)
 {
 	char	*map_string;
 
-	if (list == NULL)
+
+	if (list == NULL || list->content == NULL)
 		return ;
 	if ((map_string = ft_strnew(map.size * (map.size + 1))) == NULL)
 		return ;
 	initialize_map(&map_string, map.size);
 	while (list != NULL)
 	{
-		print_tetri(*list, map.size, &map_string);
+		print_tetri((t_tetri)*(t_tetri *)(list->content), map.size, &map_string);
 		list = list->next;
 	}
 	ft_putstr(map_string);
+	// Free la liste des tetris
 	free(map_string);
 }

@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Camille Baillat <cbaillat@student.42.fr    +#+  +:+       +#+        */
+/*   By: cbaillat <cbaillat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/30 16:02:39 by cbaillat          #+#    #+#             */
-/*   Updated: 2017/12/04 18:34:52 by Camille Bai      ###   ########.fr       */
+/*   Updated: 2017/12/08 12:40:57 by cbaillat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-#include "map.h"
 #include "algorithm.h"
+#include "input.h"
+#include "map.h"
 #include "output.h"
 
 char	*itoa_base(int value, char *result, int base)
@@ -48,26 +49,29 @@ char	*itoa_base(int value, char *result, int base)
 	return (result);
 }
 
-void	print_tetriminos(t_tetri *tetri)
+void	print_tetriminos(t_list *list)
 {
 	uint32_t	i;
 	uint32_t	j;
 	char		binary[33];
+	t_tetri		*tetri;
 
 	i = 1;
-	while (tetri != NULL)
+	tetri = (t_tetri *)list->content;
+	while (list != NULL)
 	{
 		 j = 0;
-		printf("Tetriminos %02d X: %d\n", i, tetri->x);
-		printf("Tetriminos %02d Y: %d\n", i, tetri->y);
-		// while (j < 4)
-		// {
-			// itoa_base(tetri->tetriminos[j], binary, 2);
-			// ft_putstr_padzeroes(binary, 4);
-			// ++j;
-		// }
+		printf("Tetriminos %02d width: %d\n", i, tetri->width);
+		printf("Tetriminos %02d length: %d\n", i, tetri->length);
+		while (j < 4)
+		{
+			itoa_base(tetri->tetriminos[j], binary, 2);
+			ft_putstr_padzeroes(binary, 4);
+			++j;
+		}
 		++i;
-		tetri = tetri->next;
+		list = list->next;
+		tetri = (t_tetri *)list->content;
 	}
 }
 
@@ -86,73 +90,11 @@ void	debug_map(t_map map)
 	}
 }
 
-int			main(void)
-{
-	t_tetri		tetri1;
-	t_tetri		tetri2;
-	t_tetri		tetri3;
-	t_tetri		tetri4;
-	t_map		map;
-
-	tetri1.tetriminos[0] = 0b0010;
-	tetri1.tetriminos[1] = 0b0011;
-	tetri1.tetriminos[2] = 0b0001;
-	tetri1.tetriminos[3] = 0b0000;
-	tetri1.rank = 0;
-	tetri1.length = 3;
-	tetri1.width = 2;
-	tetri1.next = &tetri2;
-
-	tetri2.tetriminos[0] = 0b0001;
-	tetri2.tetriminos[1] = 0b0111;
-	tetri2.tetriminos[2] = 0b0000;
-	tetri2.tetriminos[3] = 0b0000;
-	tetri2.rank = 1;
-	tetri2.length = 2;
-	tetri2.width = 3;
-	tetri2.next = &tetri3;
-
-	tetri3.tetriminos[0] = 0b0010;
-	tetri3.tetriminos[1] = 0b0011;
-	tetri3.tetriminos[2] = 0b0010;
-	tetri3.tetriminos[3] = 0b0000;
-	tetri3.rank = 2;
-	tetri3.length = 3;
-	tetri3.width = 2;
-	tetri3.next = &tetri4;
-	
-	tetri4.tetriminos[0] = 0b0001;
-	tetri4.tetriminos[1] = 0b0011;
-	tetri4.tetriminos[2] = 0b0001;
-	tetri4.tetriminos[3] = 0b0000;
-	tetri4.rank = 3;
-	tetri4.length = 3;
-	tetri4.width = 2;
-	tetri4.next = NULL;
-
-	map.map = NULL;
-	map.size = get_map_minsize(&tetri1);
-	while (1)
-	{
-		create_map(&map);
-		if (solve_map(&tetri1, &map) == SUCCESS)
-			break ;
-		map.size += 1;
-	}
-	ft_putstr("Debug:\n");
-	debug_map(map);
-	ft_putchar('\n');
-	print_map(map, &tetri1);
-	free(map.map);
-	return (SUCCESS);
-}
-
-/*
-// TIM
-
 int		main(int argc, char **argv)
 {
     t_list		*list;
+	t_map		map;
+
 
     if (argc != 2)
     {
@@ -164,11 +106,18 @@ int		main(int argc, char **argv)
         ft_putstr("error\n");
         return (1);
     }
-		/*
-		** SOLVE + print
-		*/
-	
-	/*  return (0);
-}
-*/
+	// print_tetriminos(list);
+	map.map = NULL;
+	map.size = get_map_minsize(list);
+	while (1)
+	{
+		create_map(&map);
+		if (solve_map(list, &map) == SUCCESS)
+			break ;
+		map.size += 1;
+	}
+	print_map(map, list);
 
+	free(map.map);
+	return (SUCCESS);
+}

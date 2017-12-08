@@ -17,7 +17,7 @@ AlwaysBreakBeforeMultilineStrings: false
 AlwaysBreakTemplateDeclarations: false
 BinPackArguments: true
 BinPackParameters: true
-BraceWrapping:   
+BraceWrapping:
   AfterClass:      false
   AfterNamespace:  false
   AfterObjCDeclaration: false
@@ -41,7 +41,7 @@ DisableFormat:   false
 ExperimentalAutoDetectBinPacking: false
 FixNamespaceComments: true
 ForEachMacros:   [ foreach, Q_FOREACH, BOOST_FOREACH ]
-IncludeCategories: 
+IncludeCategories:
   - Regex:           '^"(llvm|llvm-c|clang|clang-c)/'
     Priority:        2
   - Regex:           '^(<|"(gtest|isl|json)/)'
@@ -87,7 +87,7 @@ Standard:        Cpp11
 AlignConsecutiveDeclarations: true
 AlignEscapedNewlines: Left
 AllowShortFunctionsOnASingleLine: Empty
-BraceWrapping:   
+BraceWrapping:
   AfterControlStatement: true
   AfterEnum:       true
   AfterFunction:   true
@@ -96,12 +96,10 @@ BraceWrapping:
   BeforeCatch:     true
   BeforeElse:      true
 BreakBeforeBinaryOperators: NonAssignment
-BreakBeforeBraces: Custom#IncludeBlocks:     Regroup
+BreakBeforeBraces: Custom
 IndentCaseLabels:  true
-#IndentPPDirectives: AfterHash
 IndentWidth:       4
 SpacesInContainerLiterals: false
 TabWidth:          4
 UseTab:          Always
 ...
-

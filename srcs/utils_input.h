@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   algorithm.h                                        :+:      :+:    :+:   */
+/*   utils_input.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbaillat <cbaillat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/24 13:46:19 by cbaillat          #+#    #+#             */
-/*   Updated: 2017/12/08 10:35:31 by cbaillat         ###   ########.fr       */
+/*   Created: 2017/12/07 18:04:50 by cbaillat          #+#    #+#             */
+/*   Updated: 2017/12/07 18:18:26 by cbaillat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ALGORITHM_H
-# define ALGORITHM_H
+#ifndef UTILS_INPUT_H
+# define UTILS_INPUT_H
 
 # include "fillit.h"
-# include "map.h"
 
-t_bool	place_tetri(t_tetri *tetri, t_map *map, uint32_t x, uint32_t y);
-t_bool	solve_map(t_list *list, t_map *map);
+t_point *new_point(int x, int y);
+t_list	*free_list(t_list *list);
+void get_min_max(char *str, t_point *min, t_point *max);
 
 #endif

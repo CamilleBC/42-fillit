@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   algorithm.h                                        :+:      :+:    :+:   */
+/*   input.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbaillat <cbaillat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/24 13:46:19 by cbaillat          #+#    #+#             */
-/*   Updated: 2017/12/08 10:35:31 by cbaillat         ###   ########.fr       */
+/*   Created: 2017/12/07 17:30:31 by cbaillat          #+#    #+#             */
+/*   Updated: 2017/12/07 18:11:54 by cbaillat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ALGORITHM_H
-# define ALGORITHM_H
+#ifndef INPUT_H
+# define INPUT_H
 
 # include "fillit.h"
-# include "map.h"
+# include "utils_input.h"
 
-t_bool	place_tetri(t_tetri *tetri, t_map *map, uint32_t x, uint32_t y);
-t_bool	solve_map(t_list *list, t_map *map);
+t_list		*reading_tetri(int fd);
 
 #endif

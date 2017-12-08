@@ -3,27 +3,181 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbaillat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cbaillat <cbaillat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/21 18:46:37 by cbaillat          #+#    #+#             */
-/*   Updated: 2017/11/21 19:11:35 by cbaillat         ###   ########.fr       */
+/*   Created: 2017/11/30 16:31:04 by tifuret           #+#    #+#             */
+/*   Updated: 2017/12/08 12:34:57 by cbaillat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fillit.h"
-#include "./lib/libft.h"
+#include "input.h"
+// DEBUG
+#include "output.h"
 
-#define RAW_TETRIMINOS 21
 
-t_tetri	*ft_readtetriminos(int file_des)
+/*
+** Creates a new tetrimino structure.
+** Convert a tab of char to a tab of int to store the tetri
+** Bit shift = j - (tetri_size - width)
+*/
+
+static t_tetri *tetris_new(char *piece[TETRI_SIZE], int width, int length, char rank)
 {
-	t_tetri	*tetriminos;
-	char	tetriminos_raw[RAW_TETRIMINOS + 1];
-	uint64_t	index;
+	uint8_t		i;
+	uint8_t		j;
+	uint32_t	offset;
+	t_tetri		*tetri;
 
-	while (read(file_des, tetriminos_raw, 21))
+	tetri = ft_memalloc(sizeof(t_tetri));
+	i = -1;
+	while (++i < TETRI_SIZE)
+		tetri->tetriminos[i] = 0;
+	i = -1;
+	while (++i < length)
 	{
-		;
+		j = -1;
+		while (++j < width)
+		{
+			if (piece[i][j] == '#')
+			{
+				offset = (width - 1) - j;
+				tetri->tetriminos[i] ^= (1u << offset);
+			}
+		}
 	}
-	return (tetriminos);
+	tetri->width = width;
+	tetri->length = length;
+	tetri->rank = rank;
+	return (tetri);
+}
+
+/*
+** Reads a piece from a valid chunk, allocates a structure and populates it.
+*/
+
+static t_tetri	*get_piece(char *str, char piece)
+{
+	t_point *min;
+	t_point *max;
+	t_tetri *tetri;
+	char	*tetri_tab[TETRI_SIZE];
+	int		 i;
+
+	min = new_point(3, 3);
+	max = new_point(0, 0);
+	i = 0;
+	get_min_max(str, min, max);
+	while (i < (max->y - min->y + 1))
+	{
+		tetri_tab[i] = ft_strnew(max->x - min->x + 1);
+		ft_strncpy(tetri_tab[i], str + (min->x) + (i + min->y) * 5,
+				   max->x - min->x + 1);
+		i++;
+	}
+	tetri = tetris_new(tetri_tab, (max->x - min->x + 1),
+						(max->y - min->y + 1), piece);
+	free(min);
+	free(max);
+	return (tetri);
+}
+
+/*
+** Checks connection counts, if we have 6 or 8 connections, the tetrimino is
+** valid. Otherwise, our tetrimino is not contiguous.
+*/
+
+static int	check_connections(char *str)
+{
+	int block;
+	int i;
+
+	block = 0;
+	i = 0;
+	while (i < 20)
+	{
+		if (str[i] == '#')
+		{
+			if ((i + 1) < 20 && str[i + 1] == '#')
+				block++;
+			if ((i - 1) >= 0 && str[i - 1] == '#')
+				block++;
+			if ((i + 5) < 20 && str[i + 5] == '#')
+				block++;
+			if ((i - 5) >= 0 && str[i - 5] == '#')
+				block++;
+		}
+		i++;
+	}
+	return (block == 6 || block == 8);
+}
+
+/*
+** Checks character counts and that chunk format is valid.
+** 1- We check if there are other chars than '#' or '.'
+** 2- If there is a '#' we increment block to check if there are more than 4 '#'
+** 3- If there is no '\n' at the end of the 4 chars, the string is bad.
+** 4- For the 21st char, we check if it is a newline
+** 5- Then we check if the tetris block are all connected.
+*/
+
+static int	check_input_string(char *str, int count)
+{
+	int i;
+	int block;
+
+	block = 0;
+	i = 0;
+	while (i < 20)
+	{
+		if (i % 5 < 4)
+		{
+			if (!(str[i] == '#' || str[i] == '.'))
+				return (FAILURE);
+			if (str[i] == '#' && ++block > 4)
+				return (FAILURE);
+		}
+		else if (str[i] != '\n')
+			return (FAILURE);
+		i++;
+	}
+	if (count == 21 && str[20] != '\n')
+		return (FAILURE);
+	if (!check_connections(str))
+		return (FAILURE);
+	return (SUCCESS);
+}
+
+/*
+** Read tetriminos from fd and put them in a list.
+** We use 21 sized reads to read piece by piece since there are
+** 4 lines made of 4 chars (+ newline) = 20 chars + newline = 21 chars
+*/
+
+t_list		*reading_tetri(int fd)
+{
+	char	*tetri_tmp;
+	int		i;
+	char	rank;
+	t_list	*list;
+	t_tetri	*tetris;
+
+	tetri_tmp = ft_strnew(21);
+	list = NULL;
+	rank = 'A';
+	while ((i = read(fd, tetri_tmp, TETRI_STRING)) >= 20)
+	{
+		if (check_input_string(tetri_tmp, i) == FAILURE || rank > 'Z'
+			|| (tetris = get_piece(tetri_tmp, rank++)) == NULL)
+		{
+			free(tetri_tmp);
+			return (free_list(list));
+		}
+		ft_lstappend(&list, ft_lstnew(tetris, sizeof(t_tetri)));
+		free(tetris);
+	}
+	ft_memdel((void **)&tetri_tmp);
+	if (i != 0)
+		return (free_list(list));
+	//ft_lstrev(&list);
+	return (list);
 }

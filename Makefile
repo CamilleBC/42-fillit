@@ -16,11 +16,16 @@ TARGET_EXEC  := fillit
 SRCS_DIR  := ./srcs
 INC_DIR   := ./srcs
 BUILD_DIR := ./build
-LIB_DIR   := ./lib
+LIB_DIR   := ./libft
 
 # src / obj files
 SRCS    :=	main.c \
-			algorithm.c
+			algorithm.c \
+			input.c \
+			map.c \
+			output.c \
+			utils_input.c \
+
 OBJECTS := $(patsubst %,$(BUILD_DIR)/%,$(SRCS:.c=.o))
 # objects dependencies
 DEPS       = $(OBJECTS:.o:.d)

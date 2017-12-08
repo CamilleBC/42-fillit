@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   algorithm.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Camille Baillat <cbaillat@student.42.fr    +#+  +:+       +#+        */
+/*   By: cbaillat <cbaillat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 14:39:35 by cbaillat          #+#    #+#             */
-/*   Updated: 2017/12/04 16:07:40 by Camille Bai      ###   ########.fr       */
+/*   Updated: 2017/12/08 12:24:57 by cbaillat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "algorithm.h"
 
 /*
-** 1- try to place tetris inside the smallest map, everytime using the up-left
+** 1- try to place tetri inside the smallest map, everytime using the up-left
 ** corner
 ** 3- The first solution found has to be the one with all the pieces in the top
 ** left corner.
@@ -23,30 +23,29 @@
 ** size 2
 */
 
-t_bool	solve_map(t_tetri *tetris, t_map *map)
+t_bool	solve_map(t_list *list, t_map *map)
 {
 	uint32_t	x;
 	uint32_t	y;
+	t_tetri		*tetri;
 
-	if (tetris == NULL)
+
+	if (list == NULL)
 		return (SUCCESS);
+	tetri = (t_tetri *)list->content;
 	y = 0;
-	while (y + tetris->length <= map->size)
+	while (y + tetri->length <= map->size)
 	{
 		x = 0;
-		while (x + tetris->width <= map->size)
+		while (x + tetri->width <= map->size)
 		{
-			if (check_map(*tetris, *map, x, y) == SUCCESS)
+			if (check_map(*tetri, *map, x, y) == SUCCESS)
 			{
-				// ft_putstr("\nPLACING...\n");
-				place_on_map(tetris, map, x, y);
-				if (solve_map(tetris->next, map) == SUCCESS)
+				place_on_map(tetri, map, x, y);
+				if (solve_map(list->next, map) == SUCCESS)
 					return (SUCCESS);
 				else
-				{
-					// ft_putstr("\nREMOVING...\n");
-					place_on_map(tetris, map, x, y);
-				}
+					place_on_map(tetri, map, x, y);
 			}
 			++x;
 		}
